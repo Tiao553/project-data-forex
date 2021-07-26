@@ -64,7 +64,7 @@ services:
     ports:
       - "32763:9870"
     volumes:
-      - ./mnt/hadoop/namenode:/hadoop/dfs/name
+      - ./hadoop/namenode:/hadoop/dfs/name
     environment:
       - CLUSTER_NAME=hadoop_cluster
     healthcheck:
@@ -85,7 +85,7 @@ services:
     depends_on:
       - namenode
     volumes:
-      - ./mnt/hadoop/datanode:/hadoop/dfs/data
+      - ./hadoop/datanode:/hadoop/dfs/data
     environment:
       - SERVICE_PRECONDITION=namenode:9870
     healthcheck:
@@ -173,7 +173,7 @@ services:
     ports:
       - "32762:8888"
     volumes:
-      - ./mnt/hue/hue.ini:/usr/share/hue/desktop/conf/z-hue.ini
+      - ./hue/hue.ini:/usr/share/hue/desktop/conf/z-hue.ini
     environment:
       - SERVICE_PRECONDITION=hive-server:10000 postgres:5432
     healthcheck:
@@ -198,8 +198,8 @@ services:
       - "32766:8082"
       - "32765:7077"
     volumes:
-      - ./mnt/spark/apps:/opt/spark-apps
-      - ./mnt/spark/data:/opt/spark-data
+      - ./spark/apps:/opt/spark-apps
+      - ./spark/data:/opt/spark-data
     healthcheck:
       test: [ "CMD", "nc", "-z", "spark-master", "8082" ]
       timeout: 45s
@@ -218,8 +218,8 @@ services:
     ports:
       - "32764:8081"
     volumes:
-      - ./mnt/spark/apps:/opt/spark-apps
-      - ./mnt/spark/data:/opt/spark-data
+      - ./spark/apps:/opt/spark-apps
+      - ./spark/data:/opt/spark-data
     healthcheck:
       test: [ "CMD", "nc", "-z", "spark-worker", "8081" ]
       timeout: 45s
@@ -258,8 +258,8 @@ services:
     restart: always
     container_name: airflow
     volumes:
-      - ./mnt/airflow/airflow.cfg:/opt/airflow/airflow.cfg
-      - ./mnt/airflow/dags:/opt/airflow/dags
+      - ./airflow/airflow.cfg:/opt/airflow/airflow.cfg
+      - ./airflow/dags:/opt/airflow/dags
     ports:
       - 8080:8080
     healthcheck:
